@@ -11,17 +11,17 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-type HttpServer struct {
+type httpServer struct {
 	app app.Application
 }
 
-func NewHttpServer(e *echo.Echo, application app.Application) HttpServer {
-	return HttpServer{
+func NewHttpServer(e *echo.Echo, application app.Application) HttpServerInterface {
+	return &httpServer{
 		app: application,
 	}
 }
 
-func (h HttpServer) CreateCart(c echo.Context) (err error){
+func (h *httpServer) CreateCart(c echo.Context) (err error){
 	cmd := cart.Cart{
 		ID:   primitive.NewObjectID(),
 	}
@@ -38,7 +38,7 @@ func (h HttpServer) CreateCart(c echo.Context) (err error){
 }
 
 
-func (h HttpServer) AddProduct(c echo.Context) (err error){
+func (h *httpServer) AddProduct(c echo.Context) (err error){
 	cartID := c.Param("id")
 addProduct:=cart.Product{
 	ID:   primitive.NewObjectID(),
@@ -55,7 +55,7 @@ addProduct:=cart.Product{
 }
 
 
-func(h HttpServer) GetCart(c echo.Context)(err error){
+func(h *httpServer) GetCart(c echo.Context)(err error){
 
 	cartID := c.Param("id")
 	cart, err := h.app.Queries.GetCart.Handle(c.Request().Context(),cartID)
