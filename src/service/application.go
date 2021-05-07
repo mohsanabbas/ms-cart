@@ -31,13 +31,9 @@ func NewApplication(ctx context.Context) app.Application {
 		Commands: app.Commands{
 			CreatCart:     command.NewCreatCartHandler(cartRepository),
 			AddProduct:       command.NewAddProductHandler(cartRepository),
-			// MakeHoursAvailable:   command.NewMakeHoursAvailableHandler(hourRepository),
-			// MakeHoursUnavailable: command.NewMakeHoursUnavailableHandler(hourRepository),
 		},
 		Queries: app.Queries{
 			GetCart: query.NewGetCartHandler(cartRepository),
-			// HourAvailability:      query.NewHourAvailabilityHandler(hourRepository),
-			// TrainerAvailableHours: query.NewAvailableHoursHandler(datesRepository),
 		},
 	}
 }
