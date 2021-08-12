@@ -15,7 +15,7 @@ const (
 type Cart struct {
 	ID           primitive.ObjectID `json:"id,omitempty" bson:"_id,omitempty"`
 	Expire       int64              `json:"expire" bson:"expire"`
-	Items        []Product             `json:"items" bson:"items"`
+	Items        []Product          `json:"items" bson:"items"`
 	BusinessUnit string             `json:"businessUnit" bson:"businessUnit"`
 	// UserData     User               `json:"userData" bson:"userData"`
 	Agentsign string `json:"agentSign" bson:"agentSign"`
@@ -36,7 +36,7 @@ type RequestHeaders struct {
 }
 
 // ValidateExpiration validate expiry time
-func (ct *Cart) ValidateExpiration() error{
+func (ct *Cart) ValidateExpiration() error {
 
 	if ct.Expire <= 0 {
 		return errors.New("invalid expiration time")
@@ -49,13 +49,10 @@ func (ct *Cart) SetCartExpiration() {
 	ct.Expire = time.Now().UTC().Add(expirationTime * time.Hour).Unix()
 }
 
-
 // IsExpired checks cart expiration time
 func (ct *Cart) IsExpired() bool {
 	return time.Unix(ct.Expire, 0).Before(time.Now().UTC())
 }
-
-
 
 // SetUserData adds user data
 /*func (ct *Cart) SetUserData(credential User) {

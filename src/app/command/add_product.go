@@ -7,29 +7,30 @@ import (
 	"github.com/mohsanabbas/ms-cart/src/domain/cart"
 )
 
+type AddProductHandler interface {
+	Handle(context.Context, string, AddProduct) error
+}
 
-
-type AddProductHandler struct {
-	cartRepo           cart.Repository
+type addProductHandler struct {
+	cartRepo cart.Repository
 }
 
 func NewAddProductHandler(cartRepo cart.Repository) AddProductHandler {
 	if cartRepo == nil {
 		panic("nil cartRepo")
 	}
-	return AddProductHandler{cartRepo:cartRepo}
+	return addProductHandler{cartRepo: cartRepo}
 }
-func (h AddProductHandler) Handle(ctx context.Context,id string, cmd AddProduct) (err error) {
+func (h addProductHandler) Handle(ctx context.Context, id string, cmd AddProduct) (err error) {
 	defer func() {
-		fmt.Printf("Error : %v/n" , err)
+		fmt.Printf("Error : %v/n", err)
 	}()
 
-	p:=cart.Product{
+	p := cart.Product{
 		ID:   cmd.ID,
 		Type: cmd.Type,
 		Data: cmd.Data,
 	}
-
 
 	return h.cartRepo.AddProduct(
 		ctx,

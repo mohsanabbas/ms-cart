@@ -21,9 +21,9 @@ func NewHttpServer(e *echo.Echo, application app.Application) HttpServerInterfac
 	}
 }
 
-func (h *httpServer) CreateCart(c echo.Context) (err error){
+func (h *httpServer) CreateCart(c echo.Context) (err error) {
 	cmd := cart.Cart{
-		ID:   primitive.NewObjectID(),
+		ID: primitive.NewObjectID(),
 	}
 	if err := c.Bind(&cmd); err != nil {
 		return c.JSON(http.StatusBadRequest, err)
@@ -37,16 +37,15 @@ func (h *httpServer) CreateCart(c echo.Context) (err error){
 	return json.NewEncoder(c.Response()).Encode(cmd)
 }
 
-
-func (h *httpServer) AddProduct(c echo.Context) (err error){
+func (h *httpServer) AddProduct(c echo.Context) (err error) {
 	cartID := c.Param("id")
-addProduct:=cart.Product{
-	ID:   primitive.NewObjectID(),
-}
-	if err := c.Bind(&addProduct); err != nil {
-		return  c.JSON(http.StatusBadRequest, err)
+	addProduct := cart.Product{
+		ID: primitive.NewObjectID(),
 	}
-	err = h.app.Commands.AddProduct.Handle(c.Request().Context(),cartID, command.AddProduct(addProduct))
+	if err := c.Bind(&addProduct); err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+	err = h.app.Commands.AddProduct.Handle(c.Request().Context(), cartID, command.AddProduct(addProduct))
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
@@ -54,15 +53,14 @@ addProduct:=cart.Product{
 	return json.NewEncoder(c.Response()).Encode(addProduct)
 }
 
-
-func(h *httpServer) GetCart(c echo.Context)(err error){
+func (h *httpServer) GetCart(c echo.Context) (err error) {
 
 	cartID := c.Param("id")
-	cart, err := h.app.Queries.GetCart.Handle(c.Request().Context(),cartID)
+	cart, err := h.app.Queries.GetCart.Handle(c.Request().Context(), cartID)
 	if err != nil {
 		return err
 	}
 
-	return	c.JSON(http.StatusOK, cart)
+	return c.JSON(http.StatusOK, cart)
 
 }

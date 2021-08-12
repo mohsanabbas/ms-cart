@@ -21,5 +21,5 @@ type Repository interface {
 		id string,
 		ct *Product,
 		updateFn func(ctx context.Context, ct *Cart) (*Cart, error),
-		)error
+	) error
 }

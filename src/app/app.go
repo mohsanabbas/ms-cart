@@ -11,11 +11,11 @@ type Application struct {
 }
 
 type Commands struct {
-	CreatCart command.CreatCartHandler
+	CreatCart  command.CreatCartHandler
 	AddProduct command.AddProductHandler
 }
 
 type Queries struct {
-	GetCart query.GetCartHandler
-	AllCarts query.AllCartsHandler
+	GetCart  query.GetCartReadModel
+	AllCarts query.AllCartsReadModel
 }

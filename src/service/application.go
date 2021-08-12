@@ -12,7 +12,6 @@ import (
 
 func NewApplication(ctx context.Context) app.Application {
 
-
 	// config, err := config.GetConfig(".")
 	// if err != nil {
 	// 	fmt.Printf("Error connecting to database:%v", err)
@@ -22,15 +21,13 @@ func NewApplication(ctx context.Context) app.Application {
 	session := mongo.GetSession()
 	// defer session.Disconnect(ctx)
 
-
 	// client := session.Database(config.DBName).Collection(config.Collection)
 	cartRepository := adapters.NewCartMongoRepository(session)
 
-
 	return app.Application{
 		Commands: app.Commands{
-			CreatCart:     command.NewCreatCartHandler(cartRepository),
-			AddProduct:       command.NewAddProductHandler(cartRepository),
+			CreatCart:  command.NewCreatCartHandler(cartRepository),
+			AddProduct: command.NewAddProductHandler(cartRepository),
 		},
 		Queries: app.Queries{
 			GetCart: query.NewGetCartHandler(cartRepository),

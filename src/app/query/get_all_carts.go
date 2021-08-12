@@ -5,22 +5,20 @@ import (
 )
 
 type AllCartsReadModel interface {
-	AllCarts(ctx context.Context) ([]Cart, error)
+	Handle(ctx context.Context) ([]Cart, error)
 }
-type AllCartsHandler struct {
+type allCartsHandler struct {
 	readModel AllCartsReadModel
 }
 
-func NewAllCartsHandler(readModel AllCartsReadModel) AllCartsHandler {
+func NewAllCartsHandler(readModel AllCartsReadModel) AllCartsReadModel {
 	if readModel == nil {
 		panic("nil readModel")
 	}
 
-	return AllCartsHandler{readModel: readModel}
+	return &allCartsHandler{readModel: readModel}
 }
 
-
-
-func (h AllCartsHandler) Handle(ctx context.Context) (tr []Cart, err error) {
-	return h.readModel.AllCarts(ctx)
+func (h *allCartsHandler) Handle(ctx context.Context) (tr []Cart, err error) {
+	return h.readModel.Handle(ctx)
 }

@@ -12,7 +12,6 @@ type Product struct {
 	Data map[string]interface{} `json:"data"`
 }
 
-
 // GenerateItemID adds item "_id" in db
 func (it *Product) GenerateItemID() {
 	it.ID = primitive.NewObjectID()
